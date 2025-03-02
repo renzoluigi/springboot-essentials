@@ -1,6 +1,8 @@
 package academy.devdojo.spring_boot_essentials.controller;
 
 import academy.devdojo.spring_boot_essentials.domain.Anime;
+import academy.devdojo.spring_boot_essentials.requests.AnimePostRequestBody;
+import academy.devdojo.spring_boot_essentials.requests.AnimePutRequestBody;
 import academy.devdojo.spring_boot_essentials.service.AnimeService;
 import academy.devdojo.spring_boot_essentials.util.DateUtil;
 import lombok.AllArgsConstructor;
@@ -29,12 +31,12 @@ public class AnimeController { // A simple class, which only contains the endpoi
 
     @GetMapping("/{id}") // Path variables
     public ResponseEntity<Anime> findById(@PathVariable long id){
-        return ResponseEntity.ok(animeService.findById(id));
+        return ResponseEntity.ok(animeService.findByIdOrThrowBadResquestException(id));
     }
 
     @PostMapping
-    public ResponseEntity<Anime> save(@RequestBody Anime anime){
-        return new ResponseEntity<>(animeService.save(anime), HttpStatus.CREATED); // Returns 201 instead 200
+    public ResponseEntity<Anime> save(@RequestBody AnimePostRequestBody animePostRequestBody){ // To avoid a case of Anime + ID, because this Post needs only the name of Anime
+        return new ResponseEntity<>(animeService.save(animePostRequestBody), HttpStatus.CREATED); // Returns 201 instead 200
     }
 
     @DeleteMapping("/{id}")
@@ -44,8 +46,8 @@ public class AnimeController { // A simple class, which only contains the endpoi
     }
 
     @PutMapping
-    public ResponseEntity<Void> replace(@RequestBody Anime anime){
-        animeService.replace(anime);
+    public ResponseEntity<Void> replace(@RequestBody AnimePutRequestBody animePutRequestBody){
+        animeService.replace(animePutRequestBody);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }

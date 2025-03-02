@@ -5,6 +5,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -12,6 +13,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
+@Builder // To build automatically the object if is informed only the name (random ID)
 public class Anime { // Needs a Getter and Setter to be instantiated by Jackson
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
