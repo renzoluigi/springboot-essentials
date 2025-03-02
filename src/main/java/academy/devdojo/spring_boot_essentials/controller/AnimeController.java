@@ -25,8 +25,14 @@ public class AnimeController { // A simple class, which only contains the endpoi
 
     @GetMapping
     public ResponseEntity<List<Anime>> list(){
-        log.info(dateUtil.formatLocalDateTimeToDataBaseStyle(LocalDateTime.now()));
+        log.info(dateUtil.formatLocalDateTimeToDatabaseStyle(LocalDateTime.now()));
         return ResponseEntity.ok(animeService.listAll());
+    }
+
+    @GetMapping("/find")
+    public ResponseEntity<List<Anime>> findByName(@RequestParam(required = false) String name){ // animes/find?name={name}
+        log.info(dateUtil.formatLocalDateTimeToDatabaseStyle(LocalDateTime.now()));
+        return ResponseEntity.ok(animeService.findByName(name));
     }
 
     @GetMapping("/{id}") // Path variables

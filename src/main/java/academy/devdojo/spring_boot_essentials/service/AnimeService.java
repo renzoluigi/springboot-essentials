@@ -1,6 +1,7 @@
 package academy.devdojo.spring_boot_essentials.service;
 
 import academy.devdojo.spring_boot_essentials.domain.Anime;
+import academy.devdojo.spring_boot_essentials.mapper.AnimeMapper;
 import academy.devdojo.spring_boot_essentials.repository.AnimeRepository;
 import academy.devdojo.spring_boot_essentials.requests.AnimePostRequestBody;
 import academy.devdojo.spring_boot_essentials.requests.AnimePutRequestBody;
@@ -20,13 +21,17 @@ public class AnimeService { // The business logic will be here, so the controlle
         return animeRepository.findAll();
     }
 
+    public List<Anime> findByName(String name){
+        return animeRepository.findByName(name);
+    }
+
     public Anime findByIdOrThrowBadResquestException(long id){
         return animeRepository.findById(id)
                 .orElseThrow(()-> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Anime not found"));
     }
 
     public Anime save(AnimePostRequestBody animePostRequestBody) {
-        return animeRepository.save(Anime.builder().name(animePostRequestBody.getName()).build()); //returns the name + ID. can be used too: animeRepository.save(new Anime(ThreadLocalRandom.current().nextLong(4, 10000), animePostRequestBody.getName()));
+        return animeRepository.save(AnimeMapper.INSTANCE.toAnime(animePostRequestBody));
     }
 
     public void delete(long id) {
@@ -35,10 +40,8 @@ public class AnimeService { // The business logic will be here, so the controlle
 
     public void replace(AnimePutRequestBody animePutRequestBody) {
         Anime savedAnime = findByIdOrThrowBadResquestException(animePutRequestBody.getId());
-        Anime anime = Anime.builder()
-                .name(animePutRequestBody.getName())
-                .id(savedAnime.getId()) // Make sure the anime is on the DB
-                .build();
+        Anime anime = AnimeMapper.INSTANCE.toAnime(animePutRequestBody);
+        anime.setId(savedAnime.getId());
         animeRepository.save(anime);
     }
 }
