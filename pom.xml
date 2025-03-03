@@ -9,7 +9,7 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
 
-    <groupId>acadamy.devdojo</groupId>
+    <groupId>academy.devdojo</groupId>
     <artifactId>spring-boot-essentials</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>spring-boot-essentials</name>
@@ -35,6 +35,19 @@
     </properties>
 
     <dependencies>
+
+        <dependency>
+            <groupId>org.mapstruct</groupId>
+            <artifactId>mapstruct-processor</artifactId>
+            <version>1.5.5.Final</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-validation</artifactId>
+        </dependency>
+
         <dependency>
             <groupId>org.mapstruct</groupId>
             <artifactId>mapstruct</artifactId>
@@ -97,7 +110,7 @@
                         <path>
                             <groupId>org.mapstruct</groupId>
                             <artifactId>mapstruct-processor</artifactId>
-                            <version>1.5.5</version>
+                            <version>1.5.5.Final</version>
                         </path>
                         <path>
                             <groupId>org.projectlombok</groupId>

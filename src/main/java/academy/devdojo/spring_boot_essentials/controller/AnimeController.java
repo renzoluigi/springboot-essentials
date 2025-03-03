@@ -5,6 +5,7 @@ import academy.devdojo.spring_boot_essentials.requests.AnimePostRequestBody;
 import academy.devdojo.spring_boot_essentials.requests.AnimePutRequestBody;
 import academy.devdojo.spring_boot_essentials.service.AnimeService;
 import academy.devdojo.spring_boot_essentials.util.DateUtil;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.HttpStatus;
@@ -37,11 +38,11 @@ public class AnimeController { // A simple class, which only contains the endpoi
 
     @GetMapping("/{id}") // Path variables
     public ResponseEntity<Anime> findById(@PathVariable long id){
-        return ResponseEntity.ok(animeService.findByIdOrThrowBadResquestException(id));
+        return ResponseEntity.ok(animeService.findByIdOrThrowBadRequestException(id));
     }
 
     @PostMapping
-    public ResponseEntity<Anime> save(@RequestBody AnimePostRequestBody animePostRequestBody){ // To avoid a case of Anime + ID, because this Post needs only the name of Anime
+    public ResponseEntity<Anime> save(@RequestBody @Valid AnimePostRequestBody animePostRequestBody){ // @RequestBody to avoid a case of Anime + ID, because this Post needs only the name of Anime. @Valid to valid the annotations passed in AnimePostRequestBody
         return new ResponseEntity<>(animeService.save(animePostRequestBody), HttpStatus.CREATED); // Returns 201 instead 200
     }
 
