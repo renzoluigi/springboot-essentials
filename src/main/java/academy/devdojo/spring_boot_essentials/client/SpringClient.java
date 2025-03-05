@@ -7,7 +7,7 @@ import org.springframework.web.client.RestTemplate;
 
 @Log4j2
 public class SpringClient {
-    public static void main(String[] args) { // The rest template is useful to validate the information based in a pattern
+    public static void main(String[] args) { // The rest template is useful request for validate the information based in a pattern
         ResponseEntity<Anime> entity = new RestTemplate().getForEntity("http://localhost:8080/animes/{id}", Anime.class, 45);
         log.info(entity);
 

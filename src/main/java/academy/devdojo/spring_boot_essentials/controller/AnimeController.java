@@ -8,8 +8,6 @@ import academy.devdojo.spring_boot_essentials.util.DateUtil;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j2;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -27,35 +25,35 @@ public class AnimeController { // A simple class, which only contains the endpoi
     private final AnimeService animeService;
 
     @GetMapping
-    public ResponseEntity<Page<Anime>> list(Pageable pageable){
+    public ResponseEntity<List<Anime>> list() {
         log.info(dateUtil.formatLocalDateTimeToDatabaseStyle(LocalDateTime.now()));
-        return ResponseEntity.ok(animeService.listAll(pageable));
+        return ResponseEntity.ok(animeService.listAll());
     }
 
     @GetMapping("/find")
-    public ResponseEntity<List<Anime>> findByName(@RequestParam(required = false) String name){ // animes/find?name={name}
+    public ResponseEntity<List<Anime>> findByName(@RequestParam(required = false) String name) { // animes/find?name={name}
         log.info(dateUtil.formatLocalDateTimeToDatabaseStyle(LocalDateTime.now()));
         return ResponseEntity.ok(animeService.findByName(name));
     }
 
     @GetMapping("/{id}") // Path variables
-    public ResponseEntity<Anime> findById(@PathVariable long id){
+    public ResponseEntity<Anime> findById(@PathVariable long id) {
         return ResponseEntity.ok(animeService.findByIdOrThrowBadRequestException(id));
     }
 
     @PostMapping
-    public ResponseEntity<Anime> save(@RequestBody @Valid AnimePostRequestBody animePostRequestBody){ // @RequestBody to avoid a case of Anime + ID, because this Post needs only the name of Anime. @Valid to valid the annotations passed in AnimePostRequestBody
+    public ResponseEntity<Anime> save(@RequestBody @Valid AnimePostRequestBody animePostRequestBody) { // @RequestBody to avoid a case of Anime + ID, because this Post needs only the name of Anime. @Valid to valid the annotations passed in AnimePostRequestBody
         return new ResponseEntity<>(animeService.save(animePostRequestBody), HttpStatus.CREATED); // Returns 201 instead 200
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable long id){
+    public ResponseEntity<Void> delete(@PathVariable long id) {
         animeService.delete(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     @PutMapping
-    public ResponseEntity<Void> replace(@RequestBody AnimePutRequestBody animePutRequestBody){
+    public ResponseEntity<Void> replace(@RequestBody AnimePutRequestBody animePutRequestBody) {
         animeService.replace(animePutRequestBody);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }

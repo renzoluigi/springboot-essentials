@@ -8,8 +8,6 @@ import academy.devdojo.spring_boot_essentials.requests.AnimePostRequestBody;
 import academy.devdojo.spring_boot_essentials.requests.AnimePutRequestBody;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -19,8 +17,8 @@ import java.util.List;
 public class AnimeService { // The business logic will be here, so the controller is cleaner.
     private final AnimeRepository animeRepository;
 
-    public Page<Anime> listAll(Pageable pageable) {
-        return animeRepository.findAll(pageable);
+    public List<Anime> listAll() {
+        return animeRepository.findAll();
     }
 
     public List<Anime> findByName(String name) {
