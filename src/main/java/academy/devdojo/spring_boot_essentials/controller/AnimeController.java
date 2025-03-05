@@ -8,6 +8,8 @@ import academy.devdojo.spring_boot_essentials.util.DateUtil;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -25,9 +27,15 @@ public class AnimeController { // A simple class, which only contains the endpoi
     private final AnimeService animeService;
 
     @GetMapping
+    public ResponseEntity<Page<Anime>> list(Pageable pageable) {
+        log.info(dateUtil.formatLocalDateTimeToDatabaseStyle(LocalDateTime.now()));
+        return ResponseEntity.ok(animeService.listAll(pageable));
+    }
+
+    @GetMapping("/all")
     public ResponseEntity<List<Anime>> list() {
         log.info(dateUtil.formatLocalDateTimeToDatabaseStyle(LocalDateTime.now()));
-        return ResponseEntity.ok(animeService.listAll());
+        return ResponseEntity.ok(animeService.listAllNotPageable());
     }
 
     @GetMapping("/find")
