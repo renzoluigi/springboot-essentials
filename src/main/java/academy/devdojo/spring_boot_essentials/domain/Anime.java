@@ -9,7 +9,6 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.validator.constraints.URL;
 
 @Data // Generate getter, setter, toString, equals, hashCode...
 @AllArgsConstructor
@@ -20,5 +19,7 @@ public class Anime { // Needs a Getter and Setter to be instantiated by Jackson
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @NotBlank(message = "Anime name cannot be empty")
     private String name;
 }
