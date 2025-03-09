@@ -83,7 +83,7 @@ class AnimeControllerTest { // This class has a conflict with DateUtil
 
     @Test
     @DisplayName("findById returns anime when successful")
-    void findById_ReturnsAnime_WhenSuccessful(){
+    void findById_ReturnsAnime_WhenSuccessful() {
         Long id = createValidAnime().getId();
         Anime animes = animeController.findById(1).getBody();
 
@@ -93,7 +93,7 @@ class AnimeControllerTest { // This class has a conflict with DateUtil
 
     @Test
     @DisplayName("findByName returns anime when successful")
-    void findByName_ReturnsListOfAnime_WhenSuccessful(){
+    void findByName_ReturnsListOfAnime_WhenSuccessful() {
         String expectedName = createValidAnime().getName();
         List<Anime> animes = animeController.findByName("any name").getBody();
 
@@ -103,7 +103,7 @@ class AnimeControllerTest { // This class has a conflict with DateUtil
 
     @Test
     @DisplayName("findByName returns an empty list of anime when anime is not found")
-    void findByName_ReturnsEmptyListOfAnime_WhenAnimeIsNotFound(){
+    void findByName_ReturnsEmptyListOfAnime_WhenAnimeIsNotFound() {
         BDDMockito.when(animeServiceMock.findByName(ArgumentMatchers.anyString()))
                 .thenReturn(Collections.emptyList());
 
@@ -114,7 +114,7 @@ class AnimeControllerTest { // This class has a conflict with DateUtil
 
     @Test
     @DisplayName("save returns anime when successful")
-    void save_ReturnsAnime_WhenSuccessful(){
+    void save_ReturnsAnime_WhenSuccessful() {
         Anime expectedAnime = createValidAnime();
         Anime anime = animeController.save(AnimePostRequestBodyCreator.createAnimePostRequestBody()).getBody();
 
@@ -123,7 +123,7 @@ class AnimeControllerTest { // This class has a conflict with DateUtil
 
     @Test
     @DisplayName("replace updates anime when successful")
-    void replace_UpdatesAnime_WhenSuccessful(){
+    void replace_UpdatesAnime_WhenSuccessful() {
         Assertions.assertThatCode(() -> animeController.replace(AnimePutRequestBodyCreator.createAnimePutRequestBody()))
                 .doesNotThrowAnyException();
 
@@ -137,7 +137,7 @@ class AnimeControllerTest { // This class has a conflict with DateUtil
 
     @Test
     @DisplayName("delete removes anime when successful")
-    void delete_RemovesAnime_WhenSuccessful(){
+    void delete_RemovesAnime_WhenSuccessful() {
         Assertions.assertThatCode(() -> animeController.delete(createValidAnime().getId()))
                 .doesNotThrowAnyException();
 
