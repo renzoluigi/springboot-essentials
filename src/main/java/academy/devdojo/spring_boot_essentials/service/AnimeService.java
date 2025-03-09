@@ -23,7 +23,7 @@ public class AnimeService { // The business logic will be here, so the controlle
         return animeRepository.findAll(pageable);
     }
 
-    public List<Anime> listAllNotPageable() {
+    public List<Anime> listAllNonPageable() {
         return animeRepository.findAll();
     }
 

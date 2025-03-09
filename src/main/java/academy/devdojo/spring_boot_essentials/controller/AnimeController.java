@@ -28,19 +28,19 @@ public class AnimeController { // A simple class, which only contains the endpoi
 
     @GetMapping
     public ResponseEntity<Page<Anime>> list(Pageable pageable) {
-        log.info(dateUtil.formatLocalDateTimeToDatabaseStyle(LocalDateTime.now()));
+        
         return ResponseEntity.ok(animeService.listAll(pageable));
     }
 
     @GetMapping("/all")
-    public ResponseEntity<List<Anime>> list() {
-        log.info(dateUtil.formatLocalDateTimeToDatabaseStyle(LocalDateTime.now()));
-        return ResponseEntity.ok(animeService.listAllNotPageable());
+    public ResponseEntity<List<Anime>> listAll() {
+        
+        return ResponseEntity.ok(animeService.listAllNonPageable());
     }
 
     @GetMapping("/find")
     public ResponseEntity<List<Anime>> findByName(@RequestParam(required = false) String name) { // animes/find?name={name}
-        log.info(dateUtil.formatLocalDateTimeToDatabaseStyle(LocalDateTime.now()));
+        
         return ResponseEntity.ok(animeService.findByName(name));
     }
 

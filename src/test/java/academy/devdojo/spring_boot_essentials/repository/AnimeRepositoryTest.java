@@ -1,6 +1,7 @@
 package academy.devdojo.spring_boot_essentials.repository;
 
 import academy.devdojo.spring_boot_essentials.domain.Anime;
+import academy.devdojo.spring_boot_essentials.util.AnimeCreator;
 import jakarta.validation.ConstraintViolationException;
 import lombok.extern.log4j.Log4j2;
 import org.assertj.core.api.Assertions;
@@ -12,6 +13,8 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import java.util.List;
 import java.util.Optional;
 
+import static academy.devdojo.spring_boot_essentials.util.AnimeCreator.createAnimeToBeSaved;
+
 @DataJpaTest // To create tests
 @DisplayName("Tests for Anime Repository") // To set the name of test
 @Log4j2
@@ -20,9 +23,9 @@ class AnimeRepositoryTest {
     private AnimeRepository animeRepository;
 
     @Test
-    @DisplayName("Save persists anime when successful")
+    @DisplayName("save persists anime when successful")
     void save_PersistsAnime_WhenSuccessful(){ // method + what should he do + when should he do
-        Anime animeToBeSaved = createAnime();
+        Anime animeToBeSaved = createAnimeToBeSaved();
 
         Anime savedAnime = this.animeRepository.save(animeToBeSaved);
 
@@ -32,10 +35,10 @@ class AnimeRepositoryTest {
     }
 
     @Test
-    @DisplayName("Save updates anime when successful")
+    @DisplayName("save updates anime when successful")
     void save_UpdatesAnime_WhenSuccessful(){ // method + what should he do + when should he do
 
-        Anime animeToBeSaved = createAnime();
+        Anime animeToBeSaved = createAnimeToBeSaved();
         Anime animeSaved = this.animeRepository.save(animeToBeSaved);
 
         animeSaved.setName("Fairy Tail");
@@ -47,10 +50,10 @@ class AnimeRepositoryTest {
     }
 
     @Test
-    @DisplayName("Delete removes anime when successful")
+    @DisplayName("delete removes anime when successful")
     void delete_RemovesAnime_WhenSuccessful(){ // method + what should he do + when should he do
 
-        Anime animeToBeSaved = createAnime();
+        Anime animeToBeSaved = createAnimeToBeSaved();
         Anime animeSaved = this.animeRepository.save(animeToBeSaved);
 
         this.animeRepository.delete(animeSaved);
@@ -61,10 +64,10 @@ class AnimeRepositoryTest {
     }
 
     @Test
-    @DisplayName("Find By Id find anime by ID when successful")
+    @DisplayName("findById find anime by ID when successful")
     void findById_FindAnimeById_WhenSuccessful(){ // method + what should he do + when should he do
 
-        Anime animeToBeSaved = createAnime();
+        Anime animeToBeSaved = createAnimeToBeSaved();
         Anime animeSaved = this.animeRepository.save(animeToBeSaved);
 
         Optional<Anime> animeOptional = animeRepository.findById(animeSaved.getId());
@@ -73,9 +76,9 @@ class AnimeRepositoryTest {
     }
 
     @Test
-    @DisplayName("Find By Name find anime by name and returns a list of anime when successful")
+    @DisplayName("findByName find anime by name and returns a list of anime when successful")
     void findByName_ReturnsListOfAnime_WhenSuccessful(){ // method + what should he do + when should he do
-        Anime animeToBeSaved = createAnime();
+        Anime animeToBeSaved = createAnimeToBeSaved();
         Anime animeSaved = this.animeRepository.save(animeToBeSaved);
 
         List<Anime> listOfAnime = animeRepository.findByName(animeSaved.getName());
@@ -84,7 +87,7 @@ class AnimeRepositoryTest {
     }
 
     @Test
-    @DisplayName("Find By Name returns empty list when anime is not found")
+    @DisplayName("findByName returns empty list when anime is not found")
     void findByName_ReturnsEmptyList_WhenAnimeIsNotFound(){ // method + what should he do + when should he do
         List<Anime> animes = this.animeRepository.findByName("xaxa");
 
@@ -92,16 +95,11 @@ class AnimeRepositoryTest {
     }
 
     @Test
-    @DisplayName("Save throw ConstraintViolationException when name is empty")
+    @DisplayName("save throw ConstraintViolationException when name is empty")
     void save_ThrowConstraintViolationException_WhenNameIsEmpty(){ // method + what should he do + when should he do
         Anime anime = new Anime();
+
 //        Assertions.assertThatThrownBy(()-> this.animeRepository.save(anime)).isInstanceOf(ConstraintViolationException.class);
         Assertions.assertThatExceptionOfType(ConstraintViolationException.class).isThrownBy(() -> this.animeRepository.save(anime)).withMessageContaining("Anime name cannot be empty");
-    }
-
-    private Anime createAnime(){
-        return Anime.builder()
-                .name("Yuyu Hakusho")
-                .build();
     }
 }
