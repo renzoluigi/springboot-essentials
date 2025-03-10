@@ -22,7 +22,7 @@ public class SpringClient {
         Anime[] animes = new RestTemplate().getForObject("http://localhost:8080/animes/all", Anime[].class); // To get an array of all objects from url
         log.info(Arrays.toString(animes));
 
-        ResponseEntity<List<Anime>> exchange = new RestTemplate().exchange("http://localhost:8080/animes/all", HttpMethod.GET, null, new ParameterizedTypeReference<>() {});// To get an animes list
+        ResponseEntity<List<Anime>> exchange = new RestTemplate().exchange("http://localhost:8080/animes/all", HttpMethod.GET, null, new ParameterizedTypeReference<>() {});// To get animes list
         log.info(exchange.getBody());
 
         Anime rezero = Anime.builder().name("Re:Zero").build();
@@ -30,7 +30,7 @@ public class SpringClient {
         log.info("Saved anime {} ", rezeroSaved);
 
         Anime slime = Anime.builder().name("Slime").build();
-        ResponseEntity<Anime> slimeSaved = new RestTemplate().exchange("http://localhost:8080/animes", HttpMethod.POST, new HttpEntity<>(slime, createJsonHeader()), Anime.class); // Creating a Post request as Entity
+        ResponseEntity<Anime> slimeSaved = new RestTemplate().exchange("http://localhost:8080/animes", HttpMethod.POST, new HttpEntity<>(slime, createJsonHeader()), Anime.class); // Creating Post request as Entity
         log.info("Saved anime {} ", slimeSaved);
 
         Anime animeToBeUpdated = slimeSaved.getBody();

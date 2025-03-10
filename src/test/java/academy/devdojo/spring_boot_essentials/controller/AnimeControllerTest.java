@@ -92,13 +92,13 @@ class AnimeControllerTest { // This class has a conflict with DateUtil
     }
 
     @Test
-    @DisplayName("findByName returns anime when successful")
+    @DisplayName("findByName returns list of anime when successful")
     void findByName_ReturnsListOfAnime_WhenSuccessful() {
         String expectedName = createValidAnime().getName();
-        List<Anime> animes = animeController.findByName("any name").getBody();
+        List<Anime> animes = animeController.findByName("Akame ga Kill!").getBody();
 
         Assertions.assertThat(animes).isNotNull().isNotEmpty().hasSize(1);
-        Assertions.assertThat(animes.get(0).getName()).isNotNull().isEqualTo(expectedName);
+        Assertions.assertThat(animes.get(0).getName()).isEqualTo(expectedName);
     }
 
     @Test
